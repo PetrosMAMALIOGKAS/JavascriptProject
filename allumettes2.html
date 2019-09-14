@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+	<title>javascript tut2</title>
+	<style>
+		.container, section {width:50%; margin: 0 auto;}
+		h1 {text-align: center;}
+		#controls, #gagnant,#jouer {display : none;}
+		#msg {color: red;}
+		
+	</style>
+</head>
+
+<body>
+	<div class="container">
+	<h1>Jeu des allumettes</h1>
+	<h3 id="jouer">Jouer numero <span id="tourn"><span> joue</h3>
+	<section>
+		<img src="fire.png" id="imgdis" />
+		<div id="lesAl">
+			
+		</div>
+		<h1 id="gagnant">VOUS AVEZ GAGNE</h1>
+		<p id="controls"><button onclick="enlever()">Enlever</button>avec<input type="text" id="enleverChoix" />allumettes(s)<span id="msg"></span></p>
+		<button onclick="initialisation()">(Re)Initialiser</button>
+		 avec <input type="text" name="num" id="numAl" value="3" />allumettes.
+	</section>
+	</div> <!-- .container   -->
+	
+	<script type="text/javascript">
+		var counter = 0;
+		quijou = 1;
+		function initialisation() {
+			document.getElementById('imgdis').style.display = 'none';
+			var nombreAl = parseInt(document.getElementById('numAl').value);
+			for (var i = 0; i < nombreAl; i++) {
+				creeAlumette();
+				document.getElementById('jouer').style.display = 'block';
+			}
+			
+		}
+		
+		function quiJoue() {
+			var joue = 0
+			if ( quijou % 2 == 1 ) {
+				joue = 1;
+			} else {
+				joue = 2;
+			}
+			return joue;
+		}
+		
+		function creeAlumette() {
+			var x = document.createElement("img");
+			x.setAttribute("src", "al.jpg");
+			x.setAttribute("alt", "Mes allumettes");
+			document.getElementById('lesAl').appendChild(x);
+			document.getElementById('controls').style.display = 'block';
+		}
+		
+		function enlever() {
+			var numall = parseInt(document.getElementById('enleverChoix').value);
+			var flag = true;
+			var msg = "numerique ou entre 1 et 3";
+			var c = document.getElementById('lesAl');
+			console.log("before   " + compterElm());
+			
+			if (isNaN(numall) || numall > 3 || numall < 1) {
+				document.getElementById('msg').innerHTML = msg;
+				document.getElementById(msg).style.display = 'block';
+			} else if (numall == compterElm() || numall > compterElm()) {
+				for (var i = 0; i < numall; i++) {
+					c.removeChild(c.firstChild);
+					console.log("wining   " + compterElm());
+				}
+				document.getElementById('msg').style.display = 'none';
+				document.getElementById('gagnant').style.display = 'block'	
+			} else if (counter == 0 ) {
+				counter++;
+				c.removeChild(c.firstChild);
+				for (var i = 0; i < numall; i++) {
+					c.removeChild(c.firstChild);
+					console.log("inside first" + compterElm());
+				}
+				document.getElementById('msg').style.display = 'none';
+				quijou++;
+				document.getElementById('tourn').innerHTML = quiJoue();
+				
+			} else {
+				for (var i = 0; i < numall; i++) {
+					c.removeChild(c.firstChild);
+					console.log("inside " + compterElm());
+				}
+				document.getElementById('msg').style.display = 'none';
+				quijou++;
+				document.getElementById('tourn').innerHTML = quiJoue();
+			}
+			
+			
+			
+		}
+		
+		function compterElm() {
+			var c = document.getElementById('lesAl').childNodes.length;
+			return c;
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
